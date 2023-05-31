@@ -1,11 +1,9 @@
 import { Montserrat } from "next/font/google";
-import { ApolloProvider } from "@apollo/client";
-
-import useApollo from "@/hooks/useApollo";
 
 import "./globals.css";
 
 import Header from "@/components/Header";
+import Providers from "@/apollo/provider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -19,15 +17,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const client = useApollo(children);
-
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <ApolloProvider client={client}>
+        <Providers>
           <Header />
           {children}
-        </ApolloProvider>
+        </Providers>
       </body>
     </html>
   );

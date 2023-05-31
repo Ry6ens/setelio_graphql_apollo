@@ -1,67 +1,34 @@
 "use client";
 
+import { useQuery } from "@apollo/client";
+
 import Categories from "@/components/Categories";
 import PostCard from "@/components/PostCard";
 import PostWidget from "@/components/PostWidget";
 
-// import { getClient } from "@/lib/apollo";
-// import { gql } from "@apollo/client";
+import { Posts } from "@/lib/posts.graphql";
 
-// const query = gql`
-//   query Now {
-//     now(id: "1")
-//   }
-// `;
+import { IPosts } from "@/types/post";
 
-// const query = gql`
-//   query MyQuery {
-//     postsConnection {
-//       edges {
-//         node {
-//           author {
-//             bio
-//             id
-//             name
-//             photo {
-//               url
-//             }
-//           }
-//           createdAt
-//           slug
-//           title
-//           excerpt
-//           featuredImage {
-//             url
-//           }
-//           categories {
-//             name
-//             slug
-//           }
-//         }
-//       }
-//     }
-//   }
-// `;
+export default function Home() {
+  const { data, loading, error } = useQuery(Posts);
 
-const posts = [
-  { id: "1", title: "React", excerpt: "Learn React Testing" },
-  {
-    id: "2",
-    title: "React with Tailwind",
-    excerpt: "Learn React with Tailwind",
-  },
-];
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-export default async function Home() {
-  // const data = await getClient().query({ query });
-  // console.log("data::", data);
+  if (error) {
+    return <p>Error loading missions.</p>;
+  }
+
+  const posts = data.postsConnection.edges;
 
   return (
     <main className="container mx-auto px-10 mb-8">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 ">
         <div className="lg:col-span-8 col-span-1">
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
+          {posts.map((post: IPosts) => (
+            <PostCard key={post.node.title} post={post.node} />
           ))}
         </div>
         <div className="lg:col-span-4 col-span-1">

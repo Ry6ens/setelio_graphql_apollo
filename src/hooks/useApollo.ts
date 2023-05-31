@@ -1,12 +1,12 @@
-import { useMemo } from "react";
+// import { useMemo } from "react";
 
-import { APOLLO_STATE_PROP_NAME, initializeApollo } from "@/lib/apollo";
+// import { APOLLO_STATE_PROP_NAME, initializeApollo } from "@/lib/apollo";
 
-function useApollo(pageProps: any) {
-  const state = pageProps[APOLLO_STATE_PROP_NAME];
-  const client = useMemo(() => initializeApollo(state), [state]);
+// function useApollo(pageProps: any) {
+//   const state = pageProps[APOLLO_STATE_PROP_NAME];
+//   const client = useMemo(() => initializeApollo(state), [state]);
 
-  return client;
-}
+//   return client;
+// }
 
-export default useApollo;
+// export default useApollo;
